@@ -1,12 +1,12 @@
 ﻿
 namespace TestAPI
-{  
+{
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;  
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;  
+    using Microsoft.Extensions.Logging;
     using Microsoft.EntityFrameworkCore;
     using Customer.Domain.Repository;
     using AutoMapper;
@@ -34,24 +34,12 @@ namespace TestAPI
         public IConfiguration Configuration { get; }
 
 
-        public void ConfigureServices(IServiceCollection services)  
+        public void ConfigureServices(IServiceCollection services)
         {
             #region Inject
 
             var MySqlConnection = Environment.GetEnvironmentVariable("MySqlConnection");
             services.AddDbContext<BankingContext>(options => options.UseMySql(MySqlConnection));
-
-            //var MySqlConnection = Environment.GetEnvironmentVariable("BankingAPIConnectionString");
-            //Console.WriteLine(MySqlConnection);
-
-            //if (String.IsNullOrEmpty(MySqlConnection))
-            //{
-            //    services.AddDbContext<BankingContext>(options => options.UseMySql(Configuration.GetConnectionString("MySqlConnection")));
-            //}
-            //else
-            //{
-            //    services.AddDbContext<BankingContext>(options => options.UseMySql(MySqlConnection));
-            //}
 
             services.AddScoped<ICustomerApplicationService, CustomerApplicationService>();
             services.AddScoped<IBankAccountApplicationService, BankAccountApplicationService>();
@@ -117,7 +105,7 @@ namespace TestAPI
             app.UseHttpsRedirection();
 
             //app.UseAuthentication();
-            
+
             app.UseMvc();
         }
     }
