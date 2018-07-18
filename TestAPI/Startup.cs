@@ -34,7 +34,7 @@ namespace TestAPI
         public IConfiguration Configuration { get; }
 
 
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)  
         {
             #region Inject
 
