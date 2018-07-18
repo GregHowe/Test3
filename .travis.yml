@@ -6,8 +6,8 @@ script:
  - dotnet restore
 deploy:
    provider: cloudfoundry
-   username: GregHowe
-   password: r1ch4rdfc83.
+   username: richardfc83@gmail.com
+   password: Jumpstart0.
    api: https://api.run.pivotal.io
    organization: TensorFlow
    space: development
