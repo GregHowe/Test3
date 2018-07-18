@@ -1,8 +1,6 @@
 ---
 applications:
-- name: netcore-banking-api
+- name: MySecondWebApi
   memory: 512M
   instances: 1
   random-route: true
-  env:
-  ASPNETCORE_ENVIRONMENT: Production
