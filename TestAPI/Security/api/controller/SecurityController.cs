@@ -31,8 +31,8 @@ namespace Security.api.controller
             try
             {
               var customerDtoResponse =   _securityApplicationServic.login(customer);
-              var token = GenerateToken(customer.User);
-                return Ok(this.responseHandler.getOkCommandResponse("bearer " + token, Constantes.HttpStatus.Success, customerDtoResponse));
+              //var token = GenerateToken(customer.User);
+                return Ok(this.responseHandler.getOkCommandResponse("bearer " /*+ token*/, Constantes.HttpStatus.Success, customerDtoResponse));
             }
             catch (ArgumentException ex)
             {
@@ -44,24 +44,24 @@ namespace Security.api.controller
             }
         }
 
-        private string GenerateToken(string username)
-        {
-            var claims = new Claim[]
-            {
-                new Claim(ClaimTypes.Name, username),
-                new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
-                new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString()),
-            };
+        //private string GenerateToken(string username)
+        //{
+        //    var claims = new Claim[]
+        //    {
+        //        new Claim(ClaimTypes.Name, username),
+        //        new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
+        //        new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(DateTime.Now.AddDays(1)).ToUnixTimeSeconds().ToString()),
+        //    };
 
-            var TokenSecret = Environment.GetEnvironmentVariable("BankingAPITokenSecret");
-            Console.WriteLine(TokenSecret);
+        //    var TokenSecret = Environment.GetEnvironmentVariable("BankingAPITokenSecret");
+        //    Console.WriteLine(TokenSecret);
 
-            var token = new JwtSecurityToken(
-                new JwtHeader(new SigningCredentials(
-                    new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenSecret)), 
-                                             SecurityAlgorithms.HmacSha256)),
-                    new JwtPayload(claims));
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+        //    var token = new JwtSecurityToken(
+        //        new JwtHeader(new SigningCredentials(
+        //            new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenSecret)), 
+        //                                     SecurityAlgorithms.HmacSha256)),
+        //            new JwtPayload(claims));
+        //    return new JwtSecurityTokenHandler().WriteToken(token);
+        //}
     }
 }

@@ -38,18 +38,21 @@ namespace TestAPI
         {
             #region Inject
 
-            var MySqlConnection = Environment.GetEnvironmentVariable("BankingAPIConnectionString");
-            Console.WriteLine(MySqlConnection);
+            var MySqlConnection = Environment.GetEnvironmentVariable("MySqlConnection");
+            services.AddDbContext<BankingContext>(options => options.UseMySql(MySqlConnection));
 
-            if (String.IsNullOrEmpty(MySqlConnection))
-            {
-                services.AddDbContext<BankingContext>(options => options.UseMySql(Configuration.GetConnectionString("MySqlConnection")));
-            }
-            else
-            {
-                services.AddDbContext<BankingContext>(options => options.UseMySql(MySqlConnection));
-            }
-            
+            //var MySqlConnection = Environment.GetEnvironmentVariable("BankingAPIConnectionString");
+            //Console.WriteLine(MySqlConnection);
+
+            //if (String.IsNullOrEmpty(MySqlConnection))
+            //{
+            //    services.AddDbContext<BankingContext>(options => options.UseMySql(Configuration.GetConnectionString("MySqlConnection")));
+            //}
+            //else
+            //{
+            //    services.AddDbContext<BankingContext>(options => options.UseMySql(MySqlConnection));
+            //}
+
             services.AddScoped<ICustomerApplicationService, CustomerApplicationService>();
             services.AddScoped<IBankAccountApplicationService, BankAccountApplicationService>();
             services.AddScoped<ITransactionApplicationService, TransactionApplicationService>();
@@ -75,25 +78,25 @@ namespace TestAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddTransient<DbInitializer>();
 
-            var TokenSecret = Environment.GetEnvironmentVariable("BankingAPITokenSecret");
-            Console.WriteLine(TokenSecret);
+            //var TokenSecret = Environment.GetEnvironmentVariable("BankingAPITokenSecret");
+            //Console.WriteLine(TokenSecret);
 
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = "Jwt";  
-                options.DefaultChallengeScheme = "Jwt";              
-            }).AddJwtBearer("Jwt", options =>
-            {
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateAudience = false,
-                    ValidateIssuer = false,                    
-                    ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenSecret)), 
-                    ValidateLifetime = true, 
-                    ClockSkew = TimeSpan.FromMinutes(5) 
-                };
-            });
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = "Jwt";  
+            //    options.DefaultChallengeScheme = "Jwt";              
+            //}).AddJwtBearer("Jwt", options =>
+            //{
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateAudience = false,
+            //        ValidateIssuer = false,                    
+            //        ValidateIssuerSigningKey = true,
+            //        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(TokenSecret)), 
+            //        ValidateLifetime = true, 
+            //        ClockSkew = TimeSpan.FromMinutes(5) 
+            //    };
+            //});
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, DbInitializer seeder)
@@ -113,7 +116,7 @@ namespace TestAPI
 
             app.UseHttpsRedirection();
 
-            app.UseAuthentication();
+            //app.UseAuthentication();
             
             app.UseMvc();
         }
